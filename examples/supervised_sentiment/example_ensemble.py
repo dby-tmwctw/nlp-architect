@@ -41,14 +41,15 @@ from tensorflow.python.keras.preprocessing.sequence import pad_sequences
 from tensorflow.python.keras.preprocessing.text import Tokenizer
 
 from examples.supervised_sentiment.amazon_reviews import Amazon_Reviews
+from examples.supervised_sentiment.customized_reviews import Customized_Reviews
 from examples.supervised_sentiment.ensembler import simple_ensembler
 from nlp_architect.utils.generic import to_one_hot
 from nlp_architect.utils.io import validate_existing_filepath, check_size
-from .supervised_sentiment import simple_lstm, one_hot_cnn
+from supervised_sentiment import simple_lstm, one_hot_cnn
 
 max_fatures = 2000
 max_len = 300
-batch_size = 32
+batch_size = 16
 embed_dim = 256
 lstm_out = 140
 
@@ -132,7 +133,7 @@ if __name__ == "__main__":
         "--file_path", type=str, default="./", help="file_path where the files to parse are located"
     )
     parser.add_argument(
-        "--data_type", type=str, default="amazon", choices=["amazon"], help="dataset source"
+        "--data_type", type=str, default="amazon", choices=["amazon", "custom"], help="dataset source"
     )
     parser.add_argument(
         "--epochs",
@@ -149,4 +150,6 @@ if __name__ == "__main__":
 
     if args_in.data_type == "amazon":
         data_in = Amazon_Reviews(args_in.file_path)
+    elif args_in.data_type == "custom":
+        data_in = Customized_Reviews(args_in.file_path)
     ensemble_models(data_in, args_in)
