@@ -49,7 +49,7 @@ from supervised_sentiment import simple_lstm, one_hot_cnn
 
 max_fatures = 2000
 max_len = 300
-batch_size = 16
+batch_size = 32
 embed_dim = 256
 lstm_out = 140
 
